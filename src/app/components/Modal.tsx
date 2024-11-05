@@ -1,9 +1,9 @@
 import React, { Fragment, useState } from "react";
 import ModalNav from "./ModalNav";
 import HeaderSection from "./HeaderSection";
-import DateAndTime from "../pages/DateAndTime";
-import Payment from "../pages/Payment";
-import Completed from "../pages/Completed";
+import DateAndTime from "./pages/DateAndTime";
+import Payment from "./pages/Payment";
+import Completed from "./pages/Completed";
 
 type ModalProps = {
   isOpen: boolean;
