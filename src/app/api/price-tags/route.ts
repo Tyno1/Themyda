@@ -1,6 +1,6 @@
 import { dbConnect } from "@/app/lib/db";
-import { SectionType } from "@/app/lib/types";
-import { Section } from "@/app/models/section";
+import { PriceTagType } from "@/app/lib/types";
+import { PriceTag } from "@/app/models/priceTag";
 import { NextResponse } from "next/server";
 
 export async function GET() {
@@ -11,18 +11,15 @@ export async function GET() {
 export async function POST(request: any) {
   try {
     const con = await dbConnect();
-    const data: SectionType = await request.json();
+    const data: PriceTagType = await request.json();
     console.log(data);
 
-    const { name, capacity, priceTag, seats, description, variants } = data;
+    const { price, color, description } = data;
 
-    const newSection = new Section({
-      name,
-      seats,
-      capacity,
-      priceTag,
+    const newSection = new PriceTag({
+      price,
+      color,
       description,
-      variants,
     });
 
     await newSection.save();

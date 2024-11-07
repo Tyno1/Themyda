@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
+import sectionReducer from "./section/sectionSlice";
 
 export const store = configureStore({
   reducer: {
     // Define your reducers here
+    sections: sectionReducer,
   },
 });
 

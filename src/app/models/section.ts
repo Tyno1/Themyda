@@ -19,35 +19,6 @@ const SeatSchema = new Schema({
   },
 });
 
-const PriceSchema = new Schema({
-  amount: {
-    type: Number,
-    required: true,
-    min: 0,
-  },
-  currency: {
-    type: String,
-    required: true,
-    enum: ["lei", "eur", "usd", "gbp"],
-  },
-});
-
-const PriceTagSchema = new Schema({
-  price: {
-    type: PriceSchema,
-    required: true,
-  },
-  color: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  description: {
-    type: String,
-    trim: true,
-  },
-});
-
 const SectionSchema = new Schema(
   {
     name: {
@@ -56,9 +27,15 @@ const SectionSchema = new Schema(
       trim: true,
       unique: true,
     },
+    variants: {
+      type: String,
+      enum: ["general", "regular", "VIP"],
+      required: true,
+    },
     seats: [SeatSchema],
     priceTag: {
-      type: PriceTagSchema,
+      type: Schema.Types.ObjectId,
+      ref: "PriceTag",
       required: true,
     },
     capacity: {
@@ -77,8 +54,6 @@ const SectionSchema = new Schema(
 );
 
 const Seat = mongoose.model("Seat", SeatSchema);
-const Price = mongoose.model("Price", PriceSchema);
-const PriceTag = mongoose.model("PriceTag", PriceTagSchema);
 const Section = mongoose.model("Section", SectionSchema);
 
-export { Seat, PriceTag, Price, Section };
+export { Seat, Section };

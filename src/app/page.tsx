@@ -1,7 +1,42 @@
+"use client";
+
+import { useSelector } from "react-redux";
 import Gallery from "./components/Gallery";
 import PriceHeader from "./components/PriceHeader";
+import { RootState } from "./state/store";
+import axios from "axios";
+import { Currency, SectionType, SectionVariants, Status } from "./lib/types";
+import { useEffect } from "react";
+
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export default function Home() {
+  const sections = useSelector((state: RootState) => state.sections);
+
+  const createSection = async (newSection: SectionType) => {
+    try {
+      const response = await axios.post(`${apiUrl}/sections`, newSection);
+      console.log(response.data);
+      return response.data;
+    } catch (err) {
+      console.error(err);
+      throw new Error("Failed to create section");
+    }
+  };
+
+  const newSection: SectionType = {
+    name: "VIP 1",
+    variants: "VIP" as SectionVariants,
+    seats: [{ row: "A", number: 1, status: "available" as Status }],
+    priceTag: { amount: 20, currency: "lei" as Currency },
+    capacity: 200,
+    description: "vip seat",
+  };
+
+  useEffect(() => {
+    createSection(newSection);
+  }, []);
+
   return (
     <div className="min-h-screen">
       <main className="w-[100vw] h-[100vh] flex mx-auto my-auto p-8">
