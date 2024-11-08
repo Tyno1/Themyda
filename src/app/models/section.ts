@@ -53,7 +53,7 @@ const SectionSchema = new Schema(
   }
 );
 
-const Seat = mongoose.model("Seat", SeatSchema);
-const Section = mongoose.model("Section", SectionSchema);
+const Seat = mongoose.models.Seat || mongoose.model("Seat", SeatSchema);
+const Section = mongoose.models.Section || mongoose.model("Section", SectionSchema);
 
 export { Seat, Section };

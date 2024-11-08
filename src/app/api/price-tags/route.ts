@@ -12,20 +12,19 @@ export async function POST(request: any) {
   try {
     const con = await dbConnect();
     const data: PriceTagType = await request.json();
-    console.log(data);
 
-    const { price, color, description } = data;
+    const { price , color, description } = data;
 
-    const newSection = new PriceTag({
+    const newPriceTag = new PriceTag({
       price,
       color,
       description,
     });
 
-    await newSection.save();
-    return NextResponse.json(newSection, { status: 201 });
+    await newPriceTag.save();
+    return NextResponse.json(newPriceTag, { status: 201 });
   } catch (error) {
-    console.error("Error creating section:", error?.message);
+    console.error("Error creating section:", error);
     return NextResponse.json(
       { error: "Error creating section" },
       { status: 500 }

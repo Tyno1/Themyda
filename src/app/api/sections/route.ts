@@ -1,5 +1,6 @@
 import { dbConnect } from "@/app/lib/db";
-import { SectionType } from "@/app/lib/types";
+import { PriceTagType, SectionType } from "@/app/lib/types";
+import { PriceTag } from "@/app/models/priceTag";
 import { Section } from "@/app/models/section";
 import { NextResponse } from "next/server";
 
@@ -12,22 +13,34 @@ export async function POST(request: any) {
   try {
     const con = await dbConnect();
     const data: SectionType = await request.json();
-    console.log(data);
 
     const { name, capacity, priceTag, seats, description, variants } = data;
 
+    // Assuming priceTag is an object with amount and currency
+    const existingPriceTag = await PriceTag.findOne({
+      "price.amount": priceTag.amount,
+      "price.currency": priceTag.currency,
+    });
+
+    if (!existingPriceTag) {
+      return NextResponse.json(
+        { error: "PriceTag not found" },
+        { status: 400 }
+      );
+    }
+    
     const newSection = new Section({
       name,
       seats,
       capacity,
-      priceTag,
+      priceTag: existingPriceTag,
       description,
       variants,
     });
 
     await newSection.save();
     return NextResponse.json(newSection, { status: 201 });
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error creating section:", error?.message);
     return NextResponse.json(
       { error: "Error creating section" },

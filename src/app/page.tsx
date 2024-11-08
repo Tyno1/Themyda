@@ -28,7 +28,7 @@ export default function Home() {
     name: "VIP 1",
     variants: "VIP" as SectionVariants,
     seats: [{ row: "A", number: 1, status: "available" as Status }],
-    priceTag: { amount: 20, currency: "lei" as Currency },
+    priceTag: { amount: 500, currency: "lei" as Currency },
     capacity: 200,
     description: "vip seat",
   };

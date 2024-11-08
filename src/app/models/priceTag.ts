@@ -30,7 +30,7 @@ const PriceTagSchema = new Schema({
   },
 });
 
-const Price = mongoose.model("Price", PriceSchema);
-const PriceTag = mongoose.model("PriceTag", PriceTagSchema);
+const Price = mongoose.models.Price || mongoose.model("Price", PriceSchema);
+const PriceTag = mongoose.models.PriceTag || mongoose.model("PriceTag", PriceTagSchema);
 
 export { PriceTag, Price };

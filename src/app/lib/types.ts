@@ -27,6 +27,7 @@ export interface PriceTagType {
   color: string;
   description: string;
 }
+
 export enum SectionVariants {
   VIP = "VIP",
   REGULAR = "regular",
@@ -37,7 +38,7 @@ export interface SectionType {
   name: string;
   variants: SectionVariants;
   seats: Seat[];
-  priceTag: PriceTagType;
+  priceTag: Price;
   capacity: number;
   description: string;
 }
